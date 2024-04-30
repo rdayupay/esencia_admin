@@ -9,7 +9,7 @@ import { Menu } from 'lucide-react';
 
 import { navLinks } from '@/lib/constants';
 
-const TopBar = () => {
+const TopNavigation = () => {
   const [dropdownMenu, setDropdownMenu] = useState(false);
   const pathname = usePathname();
 
@@ -57,4 +57,4 @@ const TopBar = () => {
   );
 };
 
-export default TopBar;
+export default TopNavigation;

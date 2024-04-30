@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 
 import { navLinks } from '@/lib/constants';
 
-const LeftSideBar = () => {
+const LeftSideNavigation = () => {
   const pathname = usePathname();
 
   return (
@@ -36,4 +36,4 @@ const LeftSideBar = () => {
   );
 };
 
-export default LeftSideBar;
+export default LeftSideNavigation;
