@@ -79,7 +79,7 @@ const CollectionForm = () => {
             name="image"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>image</FormLabel>
+                <FormLabel>Image</FormLabel>
                 <FormControl>
                   <ImageUpload
                     value={field.value ? [field.value] : []}
