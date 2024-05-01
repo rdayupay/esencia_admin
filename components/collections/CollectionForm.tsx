@@ -2,7 +2,10 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { z } from 'zod';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 import { Separator } from '../ui/separator';
 import { Button } from '@/components/ui/button';
@@ -26,6 +29,10 @@ const formSchema = z.object({
 });
 
 const CollectionForm = () => {
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,7 +43,22 @@ const CollectionForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      setLoading(true);
+      const res = await fetch('/api/collections', {
+        method: 'POST',
+        body: JSON.stringify(values),
+      });
+
+      if (res.ok) {
+        setLoading(false);
+        toast.success('Collection created!');
+        router.push('/collections');
+      }
+    } catch (err) {
+      console.log('[collections_POST', err);
+      toast.error('Something went wrong! Please try again.');
+    }
   };
 
   return (
@@ -92,7 +114,18 @@ const CollectionForm = () => {
             )}
           />
 
-          <Button type="submit">Submit</Button>
+          <div className="flex gap-10">
+            <Button type="submit" className="bg-blue-600 text-white">
+              Submit
+            </Button>
+            <Button
+              type="button"
+              className="bg-red-600 text-white"
+              onClick={() => router.push('/collections')}
+            >
+              Discard
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
